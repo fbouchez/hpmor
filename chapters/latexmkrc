@@ -1,0 +1,49 @@
+# latexmk configuration to build HPMOR -*- mode: perl -*-
+
+use Config;
+use File::Spec::Functions;
+
+my $chapter;
+
+foreach (@ARGV) {
+  next if /^-/;
+  next unless /hpmor-chapter-(\d\d\d).tex/;
+  print ("Argument valid found $_ with match $1\n");
+  $chapter=$1;
+  $chapterfile=$_;
+  $chapterfile=~s/\.tex$//;
+  # $chapterfile=s/\.tex$//;
+}
+
+# if ($#ARGV == -1) {
+if (! $chapter) {
+  die ("Need to pass a single file as argument to latexmk in chapter/ directory");
+}
+# $chapterfile = $ARGV[0];
+
+print "Chapter file is $chapterfile\n";
+
+# if ($chapterfile !~ /hpmor-chapter-(\d\d\d).tex/) {
+  # die "Wrong format, chapter file should have pattern hpmor-chapter-XXX.tex";
+# }
+# $chapter=$1;
+
+print "Chapter number is $chapter\n";
+
+# Use XeLaTeX (equivalent to command-line -xelatex option)
+# $pdflatex = 'xelatex %O %S';
+# $pdflatex = "xelatex %O \"\\PassOptionsToPackage{$options}{hp-book}\\input{%S}\"" if $options;
+$basedir = updir();
+$ENV{TEXINPUTS} = ".$Config{path_sep}$basedir$Config{path_sep}";
+    # $chapterfile = 'hpmor-chapter-' . sprintf('%03d', $chapter);
+  # } else {
+    # $chapter = 1;
+  # }
+
+$pdflatex = "xelatex -jobname=$chapterfile %O \"\\RequirePackage[pdf]{hp-book}\\begin{document}\\setcounter{chapter}{" . ($chapter - 1) . "}\\input{$chapterfile}\\end{document}\"" if $chapter;
+$pdf_mode = 1;
+$pdf_previewer = 'start zathura';
+$postscript_mode = $dvi_mode = 0;
+
+# Make our fonts available to TeX
+$ENV{TEXFONTS} = catfile($basedir, 'fonts') . catfile('', '') x 2 . $Config{path_sep};

@@ -40,8 +40,13 @@ if (defined($chapter) || defined($chapterfile)) {
     $chapter = 1;
   }
   $pdflatex = "xelatex -jobname=$chapterfile %O \"\\RequirePackage[pdf]{hp-book}\\begin{document}\\setcounter{chapter}{" . ($chapter - 1) . "}\\input{$chapterfile}\\end{document}\"" if $chapter;
+
+  if ($#ARGV == 0) {
+    push @ARGV, $chapterfile
+  }
 }
 $pdf_mode = 1;
+$pdf_previewer = 'start zathura';
 $postscript_mode = $dvi_mode = 0;
 
 # Make our fonts available to TeX
