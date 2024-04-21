@@ -1,0 +1,44 @@
+\RequirePackage{hp-book}
+\RequirePackage{tikz}
+
+\def\LastRevisitedChapter{0}
+% \def\LastRevisitedChapter{6}
+
+\begin{document}
+{
+\pagestyle{empty}
+\input{hpmor-title-1}
+\input{hp-intro}
+\pagenumbering{gobble}
+\input{hp-contents}
+\cleartorecto
+}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\foreach \x in {1,...,\LastRevisitedChapter} {
+  \include{chapters/hpmor-chapter-%
+    \ifnum\x<100 0\fi%
+    \ifnum\x<10 0\fi%
+    \x}
+}
+
+\def\WIPNote{
+  \begin{minipage}{.8\linewidth}
+Note du traducteur / revisiteur:
+
+Le livre n'est pas terminé, loin de là.
+La version d'origine par AdrienH, et mise en page et corrigée par Anthony Carré est disponible sur \url{hpmor.com}
+
+Pour l'instant, je n'ai re-traduit que les chapitres 1 à \LastRevisitedChapter.
+
+La suite arrivera, patience !
+
+\hfill\emph{Florent Bouchez Tichadou}
+\end{minipage}
+}
+
+
+
+\include{hp-colophon}
+\end{document}
