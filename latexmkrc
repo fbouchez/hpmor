@@ -45,6 +45,15 @@ if (defined($chapter) || defined($chapterfile)) {
     push @ARGV, $chapterfile
   }
 }
+
+# One number, interpreted as the last revisited chapter
+if ($#ARGV == 0 && $ARGV[0] =~ /^\d+$/) {
+  print "Compiling up to chapter $ARGV[0] with hpmor-wip\n";
+  $pdflatex = "xelatex %O \"\\def\\last{$ARGV[0]}\\input{hpmor-wip.tex}\"";
+  $ARGV[0] = "hpmor-wip.tex";
+  push @ARGV, "-g";
+}
+
 $pdf_mode = 1;
 $pdf_previewer = 'start zathura';
 $postscript_mode = $dvi_mode = 0;

@@ -1,7 +1,11 @@
 \RequirePackage{hp-book}
 \RequirePackage{tikz}
 
-\def\LastRevisitedChapter{0}
+\ifx\last\undefined
+\xdef\LastRevisitedChapter{5}
+\else
+\xdef\LastRevisitedChapter{\last}
+\fi
 % \def\LastRevisitedChapter{6}
 
 \begin{document}
