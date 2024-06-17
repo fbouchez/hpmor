@@ -21,7 +21,9 @@
 \setcounter{page}{1}
 
 \foreach \x in {1,...,\LastRevisitedChapter} {
-  \ifnum\x=11\else
+  \ifnum\x=11
+    \addtocounter{chapter}{1}
+  \else
   \include{chapters/hpmor-chapter-%
     \ifnum\x<100 0\fi%
     \ifnum\x<10 0\fi%

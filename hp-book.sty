@@ -54,6 +54,12 @@
 %
 % Custom chapter style
 %
+%allow to insert a footnote mark in the "chapter XXXX" part of the title, by 
+%locally 'let'ting specialmark be footnotemark as follows:
+%{ \let\specialmark\footnotemark
+%  \chapter{my chapter}
+%}
+\let\specialmark\null
 \makeatletter 
 \makechapterstyle{evans}{%
 	\renewcommand*{\partnamefont}{\hpfont\huge}
@@ -69,7 +75,7 @@
 	
 	\renewcommand*{\printchapternum}{%
 		\chapnumfont \hyperref[contents]{\textls[30]{
-\IfInteger{\thechapter}{\NUMBERstring{chapter}}{\thechapter}
+\IfInteger{\thechapter}{\NUMBERstring{chapter}\specialmark}{\thechapter}
 }}}
 	
 	\renewcommand*{\printchaptername}{%
