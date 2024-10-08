@@ -25,8 +25,8 @@ for line in fileinput.input(inplace=True):
                  and line[i-1] != 'M'  # do not break at M. Potter
                  )
             # do not break "smth… rest or smth~? said"
+            and line[i+1] in " ~"
             and not line[i+2].islower()
-            and line[i+1] == ' '
         ):
             # candidate for split
             if line[i+2] == '»':
